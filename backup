@@ -1,0 +1,24 @@
+#!/bin/bash
+#     ////     //  ////     //
+#    // //    //  // //    //
+#   //  //   //  //  //   //
+#  //   //  //  //   //  //
+# //    // //  //    // //
+#//     ////  //     ////
+#
+# 20200407 - BookStack Backup
+echo "------------------------------------------------------------------------"
+echo "Backing up MariaSQL database..."
+echo "------------------------------------------------------------------------"
+mysqldump -u nn nnserver > BookStack.sql
+echo "------------------------------------------------------------------------"
+echo "Creating archive of files to backup..."
+echo "------------------------------------------------------------------------"
+tar -czvf /home/nn/bookstack-files-backup.tar.gz /var/www/html/BookStack/.env /var/www/html/BookStack/public/uploads /var/www/html/BookStack/storage/uploads
+echo "------------------------------------------------------------------------"
+echo "Creating archive of BookStack folder to backup..."
+echo "------------------------------------------------------------------------"
+tar -czvf /home/nn/bookstack-complete-backup.tar.gz /var/www/html/BookStack
+echo "------------------------------------------------------------------------"
+echo "Remember to move backup files to a safe place!"
+echo "------------------------------------------------------------------------"
