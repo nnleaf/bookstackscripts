@@ -6,8 +6,7 @@
 # //    // //  //    // //
 #//     ////  //     ////
 #
-# 20200407 - BookStack Backup
-# 20200513 - Removed individual file backup, added tar archiving
+# 20200513 - Cron BookStack Backup
 #
 echo "----------------------------------------------"
 echo "--[ Backing up BookStack MariaSQL database ]--"
@@ -16,14 +15,14 @@ mysqldump -u nn nnserver > /home/nn/bookstack_backup/BookStack.sql
 echo "--------------------------------------------------------"
 echo "--[ Create an archive of BookStack folder for backup ]--"
 echo "--------------------------------------------------------"
-tar -czvf /home/nn/bookstack_backup/bookstack-complete-backup.tar.gz /var/www/html/BookStack
+tar -czf /home/nn/bookstack_backup/bookstack-complete-backup.tar.gz /var/www/html/BookStack
 echo "------------------------------------------------------------------------"
 echo "Backing up bookstack_backup to vault"
 echo "------------------------------------------------------------------------"
 #Mounts vault, copies bookstack_backup with date stamp, cleans up, unmounts
-sudo mount -t cifs //192.168.1.111/n1 /mnt/tmp -o credentials=/home/nn/Keys/.vaultpassword
-tar -czvf /home/nn/bookstack_backup.tar.gz /home/nn/bookstack_backup/
-sudo cp -r /home/nn/bookstack_backup.tar.gz /mnt/tmp/Files/NNServer/WEB.BookStack_192.168.1.112/Backup/bookstack_backup_"$(date +%Y-%m-%d_%H%M%S)".tar.gz
+mount -t cifs //192.168.1.111/n1 /mnt/tmp -o credentials=/home/nn/Keys/.vaultpassword
+tar -czf /home/nn/bookstack_backup.tar.gz /home/nn/bookstack_backup/
+cp -r /home/nn/bookstack_backup.tar.gz /mnt/tmp/Files/NNServer/WEB.BookStack_192.168.1.112/Backup/bookstack_backup_"$(date +%Y-%m-%d_%H%M%S)".tar.gz
 rm /home/nn/bookstack_backup.tar.gz
 rm -r /home/nn/bookstack_backup/*
-sudo umount -t cifs //192.168.1.111/n1
+umount -t cifs //192.168.1.111/n1
