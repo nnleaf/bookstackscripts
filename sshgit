@@ -7,8 +7,8 @@
 # //    // //  //    // //
 #//     ////  //     ////
 #
-echo "------------------------------------------------------------------------"
-echo "Adding id_rsa_github key to SSH agent and test github connection"
-echo "------------------------------------------------------------------------"
+echo "---------------------------------------------------------------------"
+echo "--[ Add id_rsa_github key to SSH agent and test github connection ]--"
+echo "---------------------------------------------------------------------"
 ssh-add /home/nn/.ssh/id_rsa_github
 ssh -T git@github.com
