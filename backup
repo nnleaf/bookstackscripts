@@ -21,9 +21,9 @@ echo "---------------------------------------------------"
 echo "--[ Backing up bookstack_backup.tar.gz to Vault ]--"
 echo "---------------------------------------------------"
 #Mounts vault, copies bookstack_backup with date stamp, cleans up, unmounts
-sudo mount -t cifs //10.0.100.10/n1 /mnt/tmp -o credentials=/home/nn/.smbvault
+sudo mount -t cifs //10.0.100.10/NNVault /mnt/tmp -o credentials=/home/nn/.smbnnvault
 tar -czvf /home/nn/bookstack_backup.tar.gz /home/nn/bookstack_backup/
 sudo cp -r /home/nn/bookstack_backup.tar.gz /mnt/tmp/Files/NNServer/WEB.BookStack/Backup/bookstack_backup_"$(date +%Y-%m-%d_%H%M%S)".tar.gz
 rm /home/nn/bookstack_backup.tar.gz
 rm -r /home/nn/bookstack_backup/*
-sudo umount -t cifs //10.0.100.10/n1
+sudo umount -t cifs //10.0.100.10/NNVault
