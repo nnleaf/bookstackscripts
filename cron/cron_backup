@@ -18,4 +18,6 @@ tar -czvf /home/nn/bookstack_backup.tar.gz /home/nn/bookstack_backup/
 cp -r /home/nn/bookstack_backup.tar.gz /mnt/tmp/Backup/NNServer/WEB.BookStack/Backup/bookstack_backup_"$(date +%Y-%m-%d_%H%M%S)".tar.gz
 rm /home/nn/bookstack_backup.tar.gz
 rm -r /home/nn/bookstack_backup/*
+#Delete backups older than 30 days
+find /mnt/tmp/Backup/NNServer/WEB.BookStack/Backup/ -mtime +30 -exec rm {} +
 umount -t cifs //10.0.100.10/NNVault
