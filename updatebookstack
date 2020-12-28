@@ -1,0 +1,42 @@
+#!/bin/bash
+#     ////     //  ////     //
+#    // //    //  // //    //
+#   //  //   //  //  //   //
+#  //   //  //  //   //  //
+# //    // //  //    // //
+#//     ////  //     ////
+#
+# 20201228 - Created script to update bookstack
+#
+echo "-----------------------------"
+echo "--[ Update BookStack? Y/N ]--"
+echo "-----------------------------"
+read -p ""
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  echo "--[ !!! WARNING : CHECK ONLINE RELEASE NOTES & CREATE A SNAPSHOT BEFORE PROCEEDING !!! ]--"
+  echo "------------------------------------------------------------------------------------------"
+  echo "--[ Are you sure you want to update? Y/N ]--"
+  read -p ""
+  if [[ $REPLY =~ ^[Yy]$ ]]
+  then
+    sudo systemctl stop nginx
+    (cd /var/www/html/BookStack; sudo composer install)
+    (cd /var/www/html/BookStack; sudo git stash push --include-untracked)
+    (cd /var/www/html/BookStack; sudo git pull origin release)
+    (cd /var/www/html/BookStack; sudo composer install --no-dev)
+    (cd /var/www/html/BookStack; php artisan migrate)
+    (cd /var/www/html/BookStack; php artisan cache:clear)
+    (cd /var/www/html/BookStack; php artisan view:clear)
+    (cd /var/www/html/BookStack; sudo git stash drop)
+    sudo systemctl start nginx
+  fi
+fi
+echo "--------------------------"
+echo "--[ Reboot Server? Y/N ]--"
+echo "--------------------------"
+read -p ""
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  sudo reboot
+fi
