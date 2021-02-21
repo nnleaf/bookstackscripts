@@ -27,5 +27,5 @@ sudo cp -r /home/nn/bookstack_backup.tar.gz /mnt/tmp/Backup/NNServer/WEB.BookSta
 rm /home/nn/bookstack_backup.tar.gz
 rm -r /home/nn/bookstack_backup/*
 #Delete backups older than 30 days
-sudo find /mnt/tmp/Backup/NNServer/WEB.BookStack/Backup/ -mtime +30 -exec rm {} +
+sudo find /mnt/tmp/Backup/NNServer/WEB.BookStack/Backup/ -mtime +30 -exec rm -f {} +
 sudo umount -t cifs //10.0.100.10/NNVault
